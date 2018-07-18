@@ -1,6 +1,8 @@
 package com.entheos.store.api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +19,14 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 import com.entheos.store.api.document.Category;
+import com.entheos.store.api.document.Order;
+import com.entheos.store.api.document.OrdersLineItem;
 import com.entheos.store.api.document.Product;
 import com.entheos.store.api.document.event.CascadeMongoEventListener;
 import com.entheos.store.api.repository.CartRepository;
 import com.entheos.store.api.repository.CategoryRepository;
 import com.entheos.store.api.repository.CustomerRepository;
+import com.entheos.store.api.repository.OrderRepository;
 import com.entheos.store.api.repository.ProductRepository;
 import com.entheos.store.api.repository.RepositoryPackage;
 import com.entheos.store.api.util.ObjectUtils;
@@ -44,6 +49,9 @@ public class StoreApplication implements CommandLineRunner{
 
 	@Autowired
 	private CartRepository cartRepository;
+
+	@Autowired
+	private OrderRepository orderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(StoreApplication.class, args);
@@ -73,15 +81,15 @@ public class StoreApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		int productId = 1000000;
 		int categoryId = 5000000;
-		
+
 		customerRepository.deleteAll();
 		cartRepository.deleteAll();
 		categoryRepository.deleteAll();
 		productRepository.deleteAll();
-
+		orderRepository.deleteAll();
 
 		Category mensCategory = categoryRepository.insert(
 				Category.builder().categoryId(String.valueOf(++categoryId)).categoryName("Mens").description("Mens wear").build());
@@ -104,16 +112,16 @@ public class StoreApplication implements CommandLineRunner{
 
 		Product p5 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Puma T-shirt").description("Puma Men's Cotton Polo")
 				.category(mensCategory).price(719F).quantity(5).size(Arrays.asList("XL")).brand("Puma").build());
-		
+
 		Product p6 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Reebok T-shirt").description("Reebok Men's Cotton Polo")
 				.category(mensCategory).price(1500F).quantity(5).size(Arrays.asList("M")).brand("Reebok").build());
-		
+
 		Product p7 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Adidas T-shirt").description("Adidas Men's Cotton Polo")
 				.category(mensCategory).price(719F).quantity(5).size(Arrays.asList("SL")).brand("Adidas").build());
-		
+
 		Product p8 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Fila T-shirt").description("Fila Men's Cotton Polo")
 				.category(mensCategory).price(1500F).quantity(5).size(Arrays.asList("XXL")).brand("Fila").build());
-		
+
 		mensCategory.setProducts(Arrays.asList(p1, p2, p3 ,p4 ,p5, p6, p7, p8));
 		categoryRepository.save(mensCategory);
 
@@ -131,22 +139,22 @@ public class StoreApplication implements CommandLineRunner{
 
 		Product p13 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("HERE&NOW Top").description("HERE&NOW Women Black Lightweight Floral Print Cold Shoulder Top")
 				.category(womensCategory).price(1455F).quantity(5).size(Arrays.asList("L")).brand("HERE&NOW Top").build());
-		
+
 		Product p14 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("THERE&THEN Top").description("THERE&THEN  Women Black Lightweight Floral Print Cold Shoulder Top")
 				.category(womensCategory).price(1500F).quantity(5).size(Arrays.asList("XL")).brand("THERE&THEN Top").build());
-		
+
 		Product p15 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("THEN&THERE Top").description("THEN&THERE Women White Lightweight Floral Print Cold Shoulder Top")
 				.category(womensCategory).price(1455F).quantity(5).size(Arrays.asList("L")).brand("THEN&THERE  Top").build());
-		
+
 		Product p16 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("NOW Top").description("NOW Women Yellow Lightweight Floral Print Cold Shoulder Top")
 				.category(womensCategory).price(1500F).quantity(5).size(Arrays.asList("SL")).brand("NOW Top").build());
-		
+
 		womensCategory.setProducts(Arrays.asList(p9, p10, p11 ,p12 ,p13, p14, p15 ,p16));
 		categoryRepository.save(womensCategory);
-		
+
 		Product p17 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("CUTECUMBER Girl's Dress").description("CUTECUMBER Girls Pink Self Design Fit and Flare Dress")
 				.category(kidsCategory).price(1260F).quantity(5).size(Arrays.asList("L")).brand("CUTECUMBER").build());
-		
+
 		Product p18 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("StyleStone Girl's Dress").description("StyleStone Girls Blue & Off-White Printed A-Line Dress")
 				.category(kidsCategory).price(5045F).quantity(5).size(Arrays.asList("S")).brand("StyleStone").build());
 
@@ -158,26 +166,39 @@ public class StoreApplication implements CommandLineRunner{
 
 		Product p21 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mothercare Girls Cardigan").description("Mothercare Girls Yellow Self-Striped Cardigan")
 				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("S")).brand("Mothercare").build());
-		
+
 		Product p22 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Fathercare Girls Cardigan").description("Fathercare Girls Yellow Self-Striped Cardigan")
 				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Fathercare").build());
-		
+
 		Product p23 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Dadcare Girls Cardigan").description("Dadcare Girls White Self-Striped Cardigan")
 				.category(kidsCategory).price(2600F).quantity(5).size(Arrays.asList("SL")).brand("Dadcare").build());
-		
+
 		Product p24 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Grannycare Girls Cardigan").description("Grannycare Girls Pink Self-Striped Cardigan")
 				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("XXL")).brand("Mothercare").build());
-		
+
 		kidsCategory.setProducts(Arrays.asList(p17, p18, p19 ,p20 ,p21, p22, p23, p24));
 		categoryRepository.save(kidsCategory);
-		
-		if(LOG.isDebugEnabled()) {
-			for (Category category : categoryRepository.findAll()) {
-				LOG.debug(ObjectUtils.logObject(category));
-			}
-			for (Product product : productRepository.findAll()) {
-				LOG.debug(ObjectUtils.logObject(product));
-			}
+
+		Order order = new Order();
+
+		List<OrdersLineItem> orderLineItems = new ArrayList<>();
+		Float totalAmount = 0F;
+
+		for (Category category : categoryRepository.findAll()) {
+			LOG.debug(ObjectUtils.logObject(category));
 		}
+		for (Product product : productRepository.findAll()) {
+			OrdersLineItem item = new OrdersLineItem();
+			item.setProductId(product.getProductId());
+			item.setQuantity(product.getQuantity());
+			item.setSize(product.getSize().get(0));
+			totalAmount = totalAmount + product.getPrice();
+			orderLineItems.add(item);
+			LOG.debug(ObjectUtils.logObject(product));
+		}
+		order.setOrderLineItems(orderLineItems);
+		order.setTotalAmount(totalAmount);
+		LOG.debug(ObjectUtils.logObject(orderRepository.insert(order)));
 	}
+
 }

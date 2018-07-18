@@ -2,18 +2,13 @@ package com.entheos.store.api.dto;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.entheos.store.api.document.Category;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel
-public class ProductDTO {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ProductDTO.class);
+public class Product {
 	
 	@ApiModelProperty(example = "5000001", required=true)
 	private String productId;
