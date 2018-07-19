@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.entheos.store.api.annotation.CascadeSave;
 import com.entheos.store.api.util.ObjectUtils;
@@ -61,9 +61,9 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
 		ReflectionUtils.doWithFields(fieldValue.getClass(), callback);
 		try {
 			LOG.debug(fieldValue.getClass().getSimpleName()+ "(Id: "+callback.getId()+ ")");
-			if(!isCollection && callback.isIdFound() && StringUtils.isBlank(callback.getId().toString())) {
+			if(!isCollection && callback.isIdFound() && StringUtils.isEmpty(callback.getId().toString())) {
 				mongoOperations.save(fieldValue);
-			} else if (isCollection && callback.isIdFound() && StringUtils.isBlank(callback.getId().toString())){
+			} else if (isCollection && callback.isIdFound() && StringUtils.isEmpty(callback.getId().toString())){
 				mongoOperations.save(fieldValue);
 			}
 		} catch (Exception e) {
