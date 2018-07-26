@@ -97,6 +97,8 @@ public class StoreApplication implements CommandLineRunner{
 				Category.builder().categoryId(String.valueOf(++categoryId)).categoryName("Womens").description("Womens wear").build());
 		Category kidsCategory = categoryRepository.insert(
 				Category.builder().categoryId(String.valueOf(++categoryId)).categoryName("Kids").description("Kids wear").build());
+		Category newarrivalsCategory = categoryRepository.insert(
+				Category.builder().categoryId(String.valueOf(++categoryId)).categoryName("NewArrivals").description("New Arrivals").build());
 
 		Product p1 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz").description("Mebaz Kurtha")
 				.category(mensCategory).price(1500F).quantity(5).size(Arrays.asList("L")).brand("UCB").build());
@@ -125,28 +127,28 @@ public class StoreApplication implements CommandLineRunner{
 		mensCategory.setProducts(Arrays.asList(p1, p2, p3 ,p4 ,p5, p6, p7, p8));
 		categoryRepository.save(mensCategory);
 
-		Product p9= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz").description("Mebaz Yellow Straight Kurta")
+		Product p9= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz").description("Mebaz Yellow Kurta")
 				.category(womensCategory).price(1250F).quantity(5).size(Arrays.asList("L")).brand("W").build());
 
 		Product p10= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("W").description("W Women Red Kurta")
 				.category(womensCategory).price(2400F).quantity(5).size(Arrays.asList("S")).brand("AKS").build());
 
-		Product p11= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("AND").description("AND Women Peach Kurtha")
+		Product p11= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("AND").description("AND Women Kurtha")
 				.category(womensCategory).price(1125F).quantity(5).size(Arrays.asList("S")).brand("AKS").build());
 
 		Product p12= productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("W For Women").description("W For Women Pink Dress")
 				.category(womensCategory).price(3056F).quantity(5).size(Arrays.asList("L")).brand("W").build());
 
-		Product p13 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Weavers India").description("Weavers India Dress Material")
+		Product p13 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Weavers India").description("Weavers India Dress")
 				.category(womensCategory).price(1455F).quantity(5).size(Arrays.asList("L")).brand("HERE&NOW Top").build());
 
-		Product p14 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Kalanjali").description("Kalanjali Yellow Dress Material")
+		Product p14 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Kalanjali").description("Kalanjali Yellow Material")
 				.category(womensCategory).price(1500F).quantity(5).size(Arrays.asList("XL")).brand("THERE&THEN Top").build());
 
 		Product p15 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Globaldesi").description("Globaldesi Grey Top")
 				.category(womensCategory).price(1455F).quantity(5).size(Arrays.asList("L")).brand("THEN&THERE  Top").build());
 
-		Product p16 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("AND").description("AND Yellow Lightweight Top")
+		Product p16 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("AND").description("AND Yellow Top")
 				.category(womensCategory).price(1500F).quantity(5).size(Arrays.asList("SL")).brand("NOW Top").build());
 
 		womensCategory.setProducts(Arrays.asList(p9, p10, p11 ,p12 ,p13, p14, p15 ,p16));
@@ -163,7 +165,7 @@ public class StoreApplication implements CommandLineRunner{
 		Product p19 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Pepe Jeans").description("Pepe jeans T shirt Boys")
 				.category(kidsCategory).price(2600F).quantity(5).size(Arrays.asList("M")).brand("My Little Lambs").build());
 
-		Product p20 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz Girls").description("Mebaz Girls Printed Jeans")
+		Product p20 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz Girls").description("Mebaz Girls Jeans")
 				.category(kidsCategory).price(1500F).quantity(5).size(Arrays.asList("L")).brand("LilPicks").build());
 
 		Product p21 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mothercare").description("Mothercare Girls Cardigan")
@@ -180,6 +182,21 @@ public class StoreApplication implements CommandLineRunner{
 
 		kidsCategory.setProducts(Arrays.asList(p17, p18, p19 ,p20 ,p21, p22, p23, p24));
 		categoryRepository.save(kidsCategory);
+		
+		Product p25 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mothercare").description("Mothercare Girls Cardigan")
+				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("S")).brand("Mothercare").build());
+
+		Product p26 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Princess").description("Princess Girls Green Frock")
+				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Fathercare").build());
+
+		Product p27 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz Boys").description("Mebaz Boys Kurtha")
+				.category(kidsCategory).price(2600F).quantity(5).size(Arrays.asList("SL")).brand("Dadcare").build());
+
+		Product p28 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("H&M").description("H&M Boys Shorts")
+				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Mothercare").build());
+		
+		newarrivalsCategory.setProducts(Arrays.asList(p25, p26, p27 ,p28));
+		categoryRepository.save(newarrivalsCategory);
 
 		Order order = new Order();
 
