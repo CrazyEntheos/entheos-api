@@ -184,18 +184,30 @@ public class StoreApplication implements CommandLineRunner{
 		categoryRepository.save(kidsCategory);
 		
 		Product p25 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mothercare").description("Mothercare Girls Cardigan")
-				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("S")).brand("Mothercare").build());
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("S")).brand("Mothercare").build());
 
 		Product p26 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Princess").description("Princess Girls Green Frock")
-				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Fathercare").build());
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Fathercare").build());
 
 		Product p27 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz Boys").description("Mebaz Boys Kurtha")
-				.category(kidsCategory).price(2600F).quantity(5).size(Arrays.asList("SL")).brand("Dadcare").build());
+				.category(newarrivalsCategory).price(2600F).quantity(5).size(Arrays.asList("SL")).brand("Dadcare").build());
 
 		Product p28 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("H&M").description("H&M Boys Shorts")
-				.category(kidsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Mothercare").build());
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Mothercare").build());
 		
-		newarrivalsCategory.setProducts(Arrays.asList(p25, p26, p27 ,p28));
+		Product p29 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mothercare").description("Mothercare Girls Cardigan")
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("S")).brand("Mothercare").build());
+
+		Product p30 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Princess").description("Princess Girls Green Frock")
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Fathercare").build());
+
+		Product p31 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("Mebaz Boys").description("Mebaz Boys Kurtha")
+				.category(newarrivalsCategory).price(2600F).quantity(5).size(Arrays.asList("SL")).brand("Dadcare").build());
+
+		Product p32 = productRepository.save(Product.builder().productId(String.valueOf(++productId)).productName("H&M").description("H&M Boys Shorts")
+				.category(newarrivalsCategory).price(3015F).quantity(5).size(Arrays.asList("L")).brand("Mothercare").build());
+		
+		newarrivalsCategory.setProducts(Arrays.asList(p25, p26, p27 ,p28, p29, p30, p31, p32));
 		categoryRepository.save(newarrivalsCategory);
 
 		Order order = new Order();

@@ -18,6 +18,6 @@ public class IndexController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	void redirectToSwaggerUi(HttpServletResponse response) throws IOException {
-		response.sendRedirect("swagger-ui.html");
+		response.sendRedirect("index.html");
 	}
 }
